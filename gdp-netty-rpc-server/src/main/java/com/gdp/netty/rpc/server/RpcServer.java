@@ -2,6 +2,7 @@ package com.gdp.netty.rpc.server;
 
 import com.gdp.netty.rpc.common.annotation.NettyRpcService;
 import com.gdp.netty.rpc.server.core.NettyServer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * RPC Server
  */
+@Slf4j
 public class RpcServer extends NettyServer implements ApplicationContextAware, InitializingBean, DisposableBean {
     public RpcServer(String serverAddress, String registryAddress) {
         super(serverAddress, registryAddress);
@@ -21,6 +23,7 @@ public class RpcServer extends NettyServer implements ApplicationContextAware, I
 
     @Override
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+        log.info("ApplicationContextAware setApplicationContext.");
         Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(NettyRpcService.class);
         if (MapUtils.isNotEmpty(serviceBeanMap)) {
             for (Object serviceBean : serviceBeanMap.values()) {
@@ -34,11 +37,13 @@ public class RpcServer extends NettyServer implements ApplicationContextAware, I
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        log.info("Initializing afterPropertiesSet.");
         super.start();
     }
 
     @Override
     public void destroy() {
+        log.info("DisposableBean destroy.");
         super.stop();
     }
 }

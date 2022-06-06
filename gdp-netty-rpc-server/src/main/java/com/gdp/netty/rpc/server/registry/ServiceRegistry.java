@@ -55,6 +55,7 @@ public class ServiceRegistry {
             byte[] bytes = serviceData.getBytes(StandardCharsets.UTF_8);
             String path = Constant.ZK_DATA_PATH + "-" + rpcProtocol.hashCode();
             path = this.curatorClient.createPathData(path, bytes);
+            log.info("Create path data , path = {}, bytes size = {}", path, bytes.length);
             pathList.add(path);
             log.info("Register {} new service, host : {}, port : {}", serviceInfoList.size(), host, port);
         } catch (Exception e) {

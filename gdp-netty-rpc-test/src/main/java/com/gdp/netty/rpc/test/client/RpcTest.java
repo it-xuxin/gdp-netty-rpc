@@ -2,17 +2,19 @@ package com.gdp.netty.rpc.test.client;
 
 import com.gdp.netty.rpc.client.RpcClient;
 import com.gdp.netty.rpc.test.service.HelloService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by luxiaoxun on 2016-03-11.
  */
+@Slf4j
 public class RpcTest {
 
     public static void main(String[] args) throws InterruptedException {
         final RpcClient rpcClient = new RpcClient("127.0.0.1:2181");
 
         int threadNum = 1;
-        final int requestNum = 50;
+        final int requestNum = 5;
         Thread[] threads = new Thread[threadNum];
 
         long startTime = System.currentTimeMillis();
@@ -44,6 +46,7 @@ public class RpcTest {
             threads[i].start();
         }
         for (int i = 0; i < threads.length; i++) {
+            log.info("Thread {} join", i);
             threads[i].join();
         }
         long timeCost = (System.currentTimeMillis() - startTime);

@@ -196,7 +196,6 @@ public class ConnectionManager {
         }
         signalAvailableHandler();
         threadPoolExecutor.shutdown();
-        ;
         eventLoopGroup.shutdownGracefully();
     }
 }

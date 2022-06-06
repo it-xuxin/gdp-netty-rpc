@@ -60,13 +60,13 @@ public class ServiceDiscovery {
             List<String> nodeList = curatorClient.getChildren(Constant.ZK_REGISTRY_PATH);
             List<RpcProtocol> dataList = new ArrayList<>();
             for (String node : nodeList) {
-                log.debug("Service node: " + node);
+                log.info("Service node: " + node);
                 byte[] bytes = curatorClient.getData(Constant.ZK_REGISTRY_PATH + "/" + node);
                 String json = new String(bytes);
                 RpcProtocol rpcProtocol = RpcProtocol.fromJson(json);
                 dataList.add(rpcProtocol);
             }
-            log.debug("Service node data: {}", dataList);
+            log.info("Service node data: {}", dataList);
             //Update the service info based on the latest data
             updateConnectedServer(dataList);
         } catch (Exception e) {

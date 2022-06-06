@@ -36,7 +36,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
     @Override
     public void channelRead0(ChannelHandlerContext channelHandlerContext, RpcResponse response) throws Exception {
         String requestId = response.getRequestId();
-        log.debug("Receive response: " + requestId);
+        log.info("Receive response: " + requestId);
         RpcFuture rpcFuture = pendingRPC.get(requestId);
         if (rpcFuture != null) {
             pendingRPC.remove(requestId);
