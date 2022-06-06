@@ -94,3 +94,4 @@ Temporary Items
 ### Commitizen ###
 node_modules/
 package.json
+/logs/
