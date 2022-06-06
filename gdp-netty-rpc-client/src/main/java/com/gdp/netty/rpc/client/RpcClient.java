@@ -69,7 +69,7 @@ public class RpcClient implements ApplicationContextAware, DisposableBean {
                     if (rpcAutowired != null) {
                         String version = rpcAutowired.version();
                         field.setAccessible(true);
-                        field.set(bean,     createService(field.getType(), version));
+                        field.set(bean, createService(field.getType(), version));
                     }
                 }
             } catch (IllegalAccessException e) {

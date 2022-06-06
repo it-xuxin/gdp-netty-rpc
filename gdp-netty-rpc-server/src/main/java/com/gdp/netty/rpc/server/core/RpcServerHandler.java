@@ -4,6 +4,8 @@ import com.gdp.netty.rpc.common.codec.Beat;
 import com.gdp.netty.rpc.common.codec.RpcRequest;
 import com.gdp.netty.rpc.common.codec.RpcResponse;
 import com.gdp.netty.rpc.common.util.ServiceUtil;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -25,7 +27,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest request) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, RpcRequest request) throws Exception {
         // filter beat ping
         if (Beat.BEAT_ID.equalsIgnoreCase(request.getRequestId())) {
             log.info("Server read heartbeat ping");
@@ -37,6 +39,19 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
                 log.info("Receive request " + request.getRequestId());
                 RpcResponse response = new RpcResponse();
                 response.setRequestId(request.getRequestId());
+                try {
+                    Object result = handle(request);
+                    response.setResult(result);
+                }catch (Throwable t){
+                    response.setError(t.toString());
+                    log.error("RPC Server handle request error", t);
+                }
+                ctx.writeAndFlush(response).addListener(new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                        log.info("Send response for request " + request.getRequestId());
+                    }
+                });
             }
         });
     }

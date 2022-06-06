@@ -1,9 +1,6 @@
 package com.gdp.netty.rpc.client.handler;
 
-import com.gdp.netty.rpc.common.codec.Beat;
-import com.gdp.netty.rpc.common.codec.RpcDecoder;
-import com.gdp.netty.rpc.common.codec.RpcEncoder;
-import com.gdp.netty.rpc.common.codec.RpcRequest;
+import com.gdp.netty.rpc.common.codec.*;
 import com.gdp.netty.rpc.common.protocol.RpcProtocol;
 import com.gdp.netty.rpc.common.serializer.Serializer;
 import com.gdp.netty.rpc.common.serializer.kryo.KryoSerializer;
@@ -24,7 +21,7 @@ public class RpcClientInitializer extends ChannelInitializer<SocketChannel> {
         cp.addLast(new IdleStateHandler(0, 0 , Beat.BEAT_INTERVAL, TimeUnit.SECONDS));
         cp.addLast(new RpcEncoder(RpcRequest.class, serializer));
         cp.addLast(new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 0));
-        cp.addLast(new RpcDecoder(RpcRequest.class, serializer));
+        cp.addLast(new RpcDecoder(RpcResponse.class, serializer));
         cp.addLast(new RpcClientHandler());
     }
 }

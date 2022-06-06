@@ -37,7 +37,8 @@ public class NettyServer extends Server {
     @Override
     public void start() throws Exception {
         thread = new Thread(new Runnable() {
-            ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.makeServerThreadPool(NettyServer.class.getSimpleName(), 16, 32);
+            ThreadPoolExecutor threadPoolExecutor = ThreadPoolUtil.makeServerThreadPool(
+                    NettyServer.class.getSimpleName(), 16, 32);
 
             @Override
             public void run() {
