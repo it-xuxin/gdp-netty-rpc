@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -94,7 +93,7 @@ public class RpcFuture implements Future<Object> {
         }
     }
 
-    private RpcFuture addCallback(AsyncRPCCallback callback) {
+    public RpcFuture addCallback(AsyncRPCCallback callback) {
         lock.lock();
         try {
             if (isDone()){

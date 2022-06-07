@@ -12,9 +12,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-/**
- * Created by luxiaoxun on 2016-03-16.
- */
+
 public class ObjectProxy<T, P> implements InvocationHandler, RpcService<T, P, SerializableFunction<T>> {
     private static final Logger logger = LoggerFactory.getLogger(ObjectProxy.class);
     private Class<T> clazz;

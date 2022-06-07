@@ -166,6 +166,7 @@ public class ConnectionManager {
         }
 
         RpcProtocol rpcProtocol = loadBalance.route(serviceKey, connectedServerNodes);
+        log.info("Route = {}" , rpcProtocol.getPort());
         RpcClientHandler handler = connectedServerNodes.get(rpcProtocol);
         if (handler != null) {
             return handler;
