@@ -13,5 +13,8 @@
         <module name="gdp-netty-rpc-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gdp-netty-rpc-client-v2" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -27,6 +27,7 @@ public class RpcProtocol implements Serializable {
         return JsonUtil.jsonToObject(json, RpcProtocol.class);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
